@@ -7,14 +7,14 @@ import "slick-carousel/slick/slick-theme.css"
 import {Container, Search, Logo, Wrapper, CarouselTitle, Carousel, ModalTitle, ModalContent} from "./styles"
 import logo from "../../assets/logo.svg"
 import restaurante from "../../assets/restaurante-fake.png"
-import {Card, RestaurantCard, Modal, Map} from "../../components"
+import {Card, RestaurantCard, Modal, Map, Loader, Skeleton} from "../../components"
 
 const Home = () => {
   const [inputValue, setInputValue] = useState("")
   const [query, setQuery] = useState(null)
   const [placeId, setPlaceId] = useState(null)
   const {restaurants, restaurantSelected} = useSelector((state) => state.restaurants)
-  const [modalOpened, setModalOpened] = useState(true)
+  const [modalOpened, setModalOpened] = useState(false)
 
   const settings = {
     dots: false,
@@ -53,7 +53,10 @@ const Home = () => {
               onChange={(e) => setInputValue(e.target.value)}
             />
           </TextField>
-          <CarouselTitle>Na sua Área</CarouselTitle>
+          {restaurants.length > 0 ? (
+            <>
+
+              <CarouselTitle>Na sua Área</CarouselTitle>
           <Carousel {...settings}>
             {
               restaurants.map((restaurant) => (
@@ -65,6 +68,10 @@ const Home = () => {
               ))
             }
           </Carousel>
+            </>
+          ) : (
+            <Loader />
+            )}
         </Search>
         {restaurants.map((restaurant) => (
           <RestaurantCard
@@ -75,14 +82,25 @@ const Home = () => {
       </Container>
       <Map query={query} placeId={placeId} />
       <Modal open={modalOpened} onClose={() => setModalOpened(!modalOpened)}>
-        <ModalTitle>{restaurantSelected?.name}</ModalTitle>
-        <ModalContent>{restaurantSelected?.formatted_phone_number}</ModalContent>
-        <ModalContent>{restaurantSelected?.formatted_address}</ModalContent>
-        <ModalContent>
-          {restaurantSelected?.opening_hours?.open_now
-          ? "Aberto agora :-)"
-          : "Fechado neste momento :-("}
-        </ModalContent>
+        {restaurantSelected ? (
+          <>
+            <ModalTitle>{restaurantSelected?.name}</ModalTitle>
+            <ModalContent>{restaurantSelected?.formatted_phone_number}</ModalContent>
+            <ModalContent>{restaurantSelected?.formatted_address}</ModalContent>
+            <ModalContent>
+              {restaurantSelected?.opening_hours?.open_now
+              ? "Aberto agora :-)"
+              : "Fechado neste momento :-("}
+            </ModalContent>
+          </>
+        ) : (
+          <>
+            <Skeleton width="10px" height="10px" />
+            <Skeleton width="10px" height="10px" />
+            <Skeleton width="10px" height="10px" />
+            <Skeleton width="10px" height="10px" />
+          </>
+        )}
       </Modal>
     </Wrapper>
   )
