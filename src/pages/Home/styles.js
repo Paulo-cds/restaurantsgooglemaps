@@ -16,24 +16,6 @@ export const Container = styled.div`
   }
 `
 
-export const Header = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 16px;
-  @media (max-width: 768px) {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 99;
-    background-color: #ffffff;
-    height: 20%;
-    padding: 5px;
-  }
-`
-
 export const Search = styled.section`
   display: flex;
   flex-direction: column;
@@ -54,9 +36,8 @@ export const Logo = styled.img`
 `
 
 export const Map = styled.div`
-  background-color: red;
+  background-color: #ffffff;
   width: 500px;
-
   @media (max-width: 768px) {
     width: 100%;
   }
@@ -74,20 +55,6 @@ export const CarouselTitle = styled.h1`
   font-size: 24px;
   font-weight: bold;
   line-height: 29px;
-`
-
-export const OpenMenu = styled.button`
-  background-color: blue;
-  color: white;
-  padding: 10px;
-`
-
-export const Menu = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 16px;
 `
 
 export const ModalTitle = styled.p`
@@ -110,22 +77,18 @@ export const ModalContent = styled.p`
   font-size: 16px;
 `
 
-export const ButtonOpen = styled.button`
-  width: 100%;
-`
-
 export const ContainerOpen = styled.div`
   display: none;
   @media (max-width: 768px) {
     display: block;
     position: absolute;
     top: 21%;
-    left: 0;
+    left: -2px;
     z-index: 999;
   }
 `
 
-export const ButtonClose = styled.button`
+export const ButtonClose = styled.div`
   display: none;
   @media (max-width: 768px) {
     display: block;

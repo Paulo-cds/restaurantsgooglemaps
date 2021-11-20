@@ -5,7 +5,7 @@ import {useSelector} from "react-redux"
 import MaterialIcon from "@material/react-material-icon"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
-import {BsArrowLeftCircle, BsArrowRightCircle} from "react-icons/bs"
+import {IoArrowUndoOutline, IoArrowRedoOutline} from "react-icons/io5"
 import {
   Container,
   Search,
@@ -15,9 +15,8 @@ import {
   Carousel,
   ModalTitle,
   ModalContent,
-  ButtonOpen,
-  ButtonClose,
   ContainerOpen,
+  ButtonClose,
 } from "./styles"
 import logo from "../../assets/logo.svg"
 import restaurante from "../../assets/restaurante-fake.png"
@@ -59,13 +58,12 @@ const Home = () => {
     <Wrapper>
       {!menuCards && (
         <ContainerOpen>
-          <ButtonOpen
+          <IoArrowRedoOutline
+            size="30px"
             onClick={() => {
               setMenuCards(true)
             }}
-          >
-            <BsArrowRightCircle size="25px" />
-          </ButtonOpen>
+          />
         </ContainerOpen>
       )}
       {menuCards && (
@@ -90,16 +88,17 @@ const Home = () => {
                     display: "flex",
                     justifyContent: "space-between",
                     margin: "16px 0",
-                    padding: "0 10px",
+                    paddingLeft: "10px",
                   }}
                 >
                   <CarouselTitle>Na sua Área</CarouselTitle>
+
                   <ButtonClose
                     onClick={() => {
                       setMenuCards(false)
                     }}
                   >
-                    <BsArrowLeftCircle size="25px" />
+                    <IoArrowUndoOutline size="30px" />
                   </ButtonClose>
                 </div>
                 <Carousel {...settings}>
