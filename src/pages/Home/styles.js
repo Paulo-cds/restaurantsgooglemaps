@@ -3,7 +3,7 @@ import Slider from "react-slick"
 
 export const Wrapper = styled.div`
   display: flex;
-  flex-direction: row;  
+  flex-direction: row;
 `
 
 export const Container = styled.div`
@@ -30,7 +30,7 @@ export const Header = styled.div`
     width: 100%;
     z-index: 99;
     background-color: #ffffff;
-    height: 15%;
+    height: 20%;
     padding: 5px;
   }
 `
@@ -44,7 +44,9 @@ export const Search = styled.section`
   @media (max-width: 768px) {
     position: absolute;
     width: 70%;
-    top: 15%;
+    height: 79%;
+    overflow-y: auto;
+    top: 21%;
     left: 0;
     z-index: 99;
     padding-top: 10px;
@@ -120,12 +122,17 @@ export const ModalContent = styled.p`
 `
 
 export const ButtonOpen = styled.button`
+  width: 100%;
+`
+
+export const ContainerClose = styled.div`
   display: none;
   @media (max-width: 768px) {
     display: block;
     position: absolute;
-    top: 15%;
+    top: 21%;
     left: 0;
+    z-index: 999;
   }
 `
 

@@ -1,11 +1,11 @@
+/* eslint-disable camelcase */
 import React, {useState} from "react"
 import TextField, {Input} from "@material/react-text-field"
 import {useSelector} from "react-redux"
 import MaterialIcon from "@material/react-material-icon"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
-import {AiOutlineArrowLeft} from "react-icons/ai"
-import {AiOutlineArrowRight} from "react-icons/ai"
+import {BsArrowLeftCircle, BsArrowRightCircle} from "react-icons/bs"
 import {
   Container,
   ContainerSearch,
@@ -19,6 +19,7 @@ import {
   Header,
   ButtonOpen,
   ButtonClose,
+  ContainerClose,
 } from "./styles"
 import logo from "../../assets/logo.svg"
 import restaurante from "../../assets/restaurante-fake.png"
@@ -58,64 +59,75 @@ const Home = () => {
 
   return (
     <Wrapper>
-      <Container>        
-          <Header>
-            <Logo src={logo} alt="Logo do Restaurante" />
-            <TextField
-              label="Pesquisar Restaurante"
-              outlined
-              trailingIcon={<MaterialIcon role="button" icon="search" />}
-            >
-              <Input
-                value={inputValue}
-                onKeyPress={handleKeyPress}
-                onChange={(e) => setInputValue(e.target.value)}
-              />
-            </TextField>
-          </Header>
-          {!menuCards && (
-          <ButtonOpen 
-            onClick={() => {setMenuCards(true)}}
+      <Container>
+        <Header>
+          <Logo src={logo} alt="Logo do Restaurante" />
+          <TextField
+            label="Pesquisar Restaurante"
+            outlined
+            trailingIcon={<MaterialIcon role="button" icon="search" />}
           >
-            <AiOutlineArrowRight size="25px" />
-          </ButtonOpen>
-          )}
-          {menuCards && (
-        <Search>
-          <ContainerSearch>
-            {restaurants.length > 0 ? (
-              <>
-                <div style={{display: "flex", justifyContent: "space-between", margin: "16px 0", padding: "0 10px"}}>
-                  <CarouselTitle>Na sua Área</CarouselTitle>
-                  <ButtonClose 
-                    onClick={() => {setMenuCards(false)}}
+            <Input
+              value={inputValue}
+              onKeyPress={handleKeyPress}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+          </TextField>
+        </Header>
+        {!menuCards && (
+          <ContainerClose>
+            <ButtonOpen
+              onClick={() => {
+                setMenuCards(true)
+              }}
+            >
+              <BsArrowRightCircle size="25px" />
+            </ButtonOpen>
+          </ContainerClose>
+        )}
+        {menuCards && (
+          <Search>
+            <ContainerSearch>
+              {restaurants.length > 0 ? (
+                <>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      margin: "16px 0",
+                      padding: "0 10px",
+                    }}
                   >
-                    <AiOutlineArrowLeft size="25px" />
-                  </ButtonClose>
-                </div>
-                <Carousel {...settings}>
-                  {
-                    restaurants.map((restaurant) => (
+                    <CarouselTitle>Na sua Área</CarouselTitle>
+                    <ButtonClose
+                      onClick={() => {
+                        setMenuCards(false)
+                      }}
+                    >
+                      <BsArrowLeftCircle size="25px" />
+                    </ButtonClose>
+                  </div>
+                  <Carousel {...settings}>
+                    {restaurants.map((restaurant) => (
                       <Card
                         key={restaurant.place_id}
                         photo={restaurant.photos ? restaurant.photos[0].getUrl() : restaurante}
                         title={restaurant.name}
                       />
-                    ))
-                  }
-                </Carousel>
-              </>
-            ) : (
-              <Loader />
+                    ))}
+                  </Carousel>
+                </>
+              ) : (
+                <Loader />
               )}
-          </ContainerSearch>        
-          {restaurants.map((restaurant) => (
-            <RestaurantCard
-              onClick={() => handleOpenModal(restaurant.place_id)}
-              restaurant={restaurant}
-            />
-          ))}
-        </Search>
+            </ContainerSearch>
+            {restaurants.map((restaurant) => (
+              <RestaurantCard
+                onClick={() => handleOpenModal(restaurant.place_id)}
+                restaurant={restaurant}
+              />
+            ))}
+          </Search>
         )}
       </Container>
       <Map query={query} placeId={placeId} />
@@ -127,8 +139,8 @@ const Home = () => {
             <ModalContent>{restaurantSelected?.formatted_address}</ModalContent>
             <ModalContent>
               {restaurantSelected?.opening_hours?.open_now
-              ? "Aberto agora :-)"
-              : "Fechado neste momento :-("}
+                ? "Aberto agora :-)"
+                : "Fechado neste momento :-("}
             </ModalContent>
           </>
         ) : (
