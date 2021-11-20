@@ -8,7 +8,6 @@ import "slick-carousel/slick/slick-theme.css"
 import {BsArrowLeftCircle, BsArrowRightCircle} from "react-icons/bs"
 import {
   Container,
-  ContainerSearch,
   Search,
   Logo,
   Wrapper,
@@ -16,10 +15,9 @@ import {
   Carousel,
   ModalTitle,
   ModalContent,
-  Header,
   ButtonOpen,
   ButtonClose,
-  ContainerClose,
+  ContainerOpen,
 } from "./styles"
 import logo from "../../assets/logo.svg"
 import restaurante from "../../assets/restaurante-fake.png"
@@ -59,77 +57,73 @@ const Home = () => {
 
   return (
     <Wrapper>
-      <Container>
-        <Header>
-          <Logo src={logo} alt="Logo do Restaurante" />
-          <TextField
-            label="Pesquisar Restaurante"
-            outlined
-            trailingIcon={<MaterialIcon role="button" icon="search" />}
+      {!menuCards && (
+        <ContainerOpen>
+          <ButtonOpen
+            onClick={() => {
+              setMenuCards(true)
+            }}
           >
-            <Input
-              value={inputValue}
-              onKeyPress={handleKeyPress}
-              onChange={(e) => setInputValue(e.target.value)}
-            />
-          </TextField>
-        </Header>
-        {!menuCards && (
-          <ContainerClose>
-            <ButtonOpen
-              onClick={() => {
-                setMenuCards(true)
-              }}
-            >
-              <BsArrowRightCircle size="25px" />
-            </ButtonOpen>
-          </ContainerClose>
-        )}
-        {menuCards && (
+            <BsArrowRightCircle size="25px" />
+          </ButtonOpen>
+        </ContainerOpen>
+      )}
+      {menuCards && (
+        <Container>
           <Search>
-            <ContainerSearch>
-              {restaurants.length > 0 ? (
-                <>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      margin: "16px 0",
-                      padding: "0 10px",
+            <Logo src={logo} alt="Logo do Restaurante" />
+            <TextField
+              label="Pesquisar Restaurante"
+              outlined
+              trailingIcon={<MaterialIcon role="button" icon="search" />}
+            >
+              <Input
+                value={inputValue}
+                onKeyPress={handleKeyPress}
+                onChange={(e) => setInputValue(e.target.value)}
+              />
+            </TextField>
+            {restaurants.length > 0 ? (
+              <>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    margin: "16px 0",
+                    padding: "0 10px",
+                  }}
+                >
+                  <CarouselTitle>Na sua Área</CarouselTitle>
+                  <ButtonClose
+                    onClick={() => {
+                      setMenuCards(false)
                     }}
                   >
-                    <CarouselTitle>Na sua Área</CarouselTitle>
-                    <ButtonClose
-                      onClick={() => {
-                        setMenuCards(false)
-                      }}
-                    >
-                      <BsArrowLeftCircle size="25px" />
-                    </ButtonClose>
-                  </div>
-                  <Carousel {...settings}>
-                    {restaurants.map((restaurant) => (
-                      <Card
-                        key={restaurant.place_id}
-                        photo={restaurant.photos ? restaurant.photos[0].getUrl() : restaurante}
-                        title={restaurant.name}
-                      />
-                    ))}
-                  </Carousel>
-                </>
-              ) : (
-                <Loader />
-              )}
-            </ContainerSearch>
-            {restaurants.map((restaurant) => (
-              <RestaurantCard
-                onClick={() => handleOpenModal(restaurant.place_id)}
-                restaurant={restaurant}
-              />
-            ))}
+                    <BsArrowLeftCircle size="25px" />
+                  </ButtonClose>
+                </div>
+                <Carousel {...settings}>
+                  {restaurants.map((restaurant) => (
+                    <Card
+                      key={restaurant.place_id}
+                      photo={restaurant.photos ? restaurant.photos[0].getUrl() : restaurante}
+                      title={restaurant.name}
+                    />
+                  ))}
+                </Carousel>
+              </>
+            ) : (
+              <Loader />
+            )}
           </Search>
-        )}
-      </Container>
+          {restaurants.map((restaurant) => (
+            <RestaurantCard
+              onClick={() => handleOpenModal(restaurant.place_id)}
+              restaurant={restaurant}
+            />
+          ))}
+        </Container>
+      )}
       <Map query={query} placeId={placeId} />
       <Modal open={modalOpened} onClose={() => setModalOpened(!modalOpened)}>
         {restaurantSelected ? (

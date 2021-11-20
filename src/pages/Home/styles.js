@@ -10,10 +10,9 @@ export const Container = styled.div`
   width: 360px;
   height: 100vh;
   overflow-y: auto;
-
+  padding-top: 16px;
   @media (max-width: 768px) {
-    width: 0;
-    height: 0;
+    width: 70%;
   }
 `
 
@@ -41,16 +40,6 @@ export const Search = styled.section`
   justify-content: center;
   background-color: #ffffff;
   width: 100%;
-  @media (max-width: 768px) {
-    position: absolute;
-    width: 70%;
-    height: 79%;
-    overflow-y: auto;
-    top: 21%;
-    left: 0;
-    z-index: 99;
-    padding-top: 10px;
-  }
 `
 
 export const ContainerSearch = styled.aside`
@@ -125,7 +114,7 @@ export const ButtonOpen = styled.button`
   width: 100%;
 `
 
-export const ContainerClose = styled.div`
+export const ContainerOpen = styled.div`
   display: none;
   @media (max-width: 768px) {
     display: block;
